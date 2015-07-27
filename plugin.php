@@ -18,3 +18,8 @@ define('JPTT_POLL_PLUGIN_URI', plugin_dir_url(__FILE__));
 
 include_once JPTT_POLL_PLUGIN_PATH . 'includes/register-post-type.php';
 include_once JPTT_POLL_PLUGIN_PATH . 'includes/register-meta-boxes.php';
+
+register_activation_hook(__FILE__, function() {
+	include_once JPTT_POLL_PLUGIN_PATH . 'includes/class-poll-schema.php';
+	jptt\poll\Schema::create_poll_schema();
+});
