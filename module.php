@@ -18,7 +18,6 @@ define( 'JPTT_POLL_PLUGIN_URI', plugin_dir_url( __FILE__ ) );
 
 include_once JPTT_POLL_PLUGIN_PATH . 'includes/class-poll.php';
 include_once JPTT_POLL_PLUGIN_PATH . 'includes/register-post-type.php';
-include_once JPTT_POLL_PLUGIN_PATH . 'includes/register-meta-boxes.php';
 
 /**
  *  Load plugin textdomain.
@@ -31,7 +30,51 @@ register_activation_hook( __FILE__, function() {
 	jptt\Poll::create_schema();
 } );
 
+add_filter( 'rwmb_meta_boxes', function($meta_boxes) {
+	$meta_boxes[] = array(
+			'id' => 'poll-metabox',
+			'title' => __( 'Poll options', 'jptt' ),
+			'post_types' => array( 'poll' ),
+			'context' => 'normal',
+			'priority' => 'high',
+			'autosave' => true,
+			'fields' => array(
+					array(
+							'name' => __( 'Options', 'jptt' ),
+							'id' => "_poll_options",
+							'type' => 'text',
+							'clone' => true,
+					),
+			),
+	);
+	return $meta_boxes;
+} );
+
+add_action( 'add_meta_boxes', function() {
+	add_meta_box( 'metabox-id', __( 'Votes', 'jptt' ), function( $post = null ) {
+		$poll_options = (array) get_post_meta( $post->ID, '_poll_options', TRUE );
+
+		$total = jptt\Poll::get_total_votes( $post->ID );
+
+		$format = '<div style="padding:5px">%s<div style="border: 1px solid darkgray; background-color: lightgray; box-sizing: border-box; width:%s">%s</div></div>';
+		foreach ( $poll_options as $key => $option ) {
+			$count = jptt\Poll::get_total_votes( $post->ID, $key );
+			$percent = ($count * 100) / $total;
+
+			printf( $format, $option, $percent . '%', number_format( $percent, 2 ) . '%' );
+		}
+	}, 'poll', 'side', 'high' );
+}, 10, 2 );
+
 add_action( 'wp_ajax_user_poll_vote', function() {
 	$Poll = new jptt\Poll();
 	$Poll->vote();
+	$result = $Poll->vote();
+	do_action('user_after_vote', $result);
+}, 10 );
+
+add_action( 'wp_ajax_nopriv_user_poll_vote', function() {
+	$Poll = new jptt\Poll();
+	$result = $Poll->vote();
+	do_action('user_after_vote', $result);
 }, 10 );
