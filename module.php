@@ -20,6 +20,13 @@ include_once JPTT_POLL_PLUGIN_PATH . 'includes/class-poll.php';
 include_once JPTT_POLL_PLUGIN_PATH . 'includes/register-post-type.php';
 include_once JPTT_POLL_PLUGIN_PATH . 'includes/register-meta-boxes.php';
 
+/**
+ *  Load plugin textdomain.
+ */
+add_action( 'plugins_loaded', function () {
+	load_plugin_textdomain( 'jptt', false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
+} );
+
 register_activation_hook( __FILE__, function() {
 	jptt\Poll::create_schema();
 } );
@@ -28,30 +35,3 @@ add_action( 'wp_ajax_user_poll_vote', function() {
 	$Poll = new jptt\Poll();
 	$Poll->vote();
 }, 10 );
-
-/**
- *
- * @param WP_Post $post
- */
-function metabox_callback( $post = null ) {
-	$poll_options = (array) get_post_meta( $post->ID, 'poll_options', TRUE );
-
-	$total = jptt\Poll::get_total_votes( $post->ID );
-
-	$format = '<div style="padding:5px">%s<div style="border: 1px solid darkgray; background-color: lightgray; padding: 5px 0; box-sizing: border-box; width:%s"></div></div>';
-	foreach ( $poll_options as $key => $option ) {
-		$count = jptt\Poll::get_total_votes( $post->ID, $key );
-		$percent = ($count * 100) / 18;
-
-		printf( $format, "{$option} ({$count})", $percent . '%' );
-	}
-}
-
-function adding_custom_meta_boxes() {
-	add_meta_box(
-					'metabox-id', __( 'Votes', 'jptt' ), 'metabox_callback', 'poll', 'side', 'high'
-	);
-}
-
-add_action( 'add_meta_boxes', 'adding_custom_meta_boxes', 10, 2 );
-

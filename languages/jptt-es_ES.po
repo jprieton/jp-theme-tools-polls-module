@@ -1,0 +1,53 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: a23\n"
+"POT-Creation-Date: 2015-08-21 10:47-0430\n"
+"PO-Revision-Date: 2015-08-21 10:47-0430\n"
+"Last-Translator: Javier Prieto <jprieton@gmail.com>\n"
+"Language-Team: \n"
+"Language: es_ES\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.4\n"
+"X-Poedit-KeywordsList: __;_e;_n:1,2;_x:1,2c;_ex:1,2c\n"
+"X-Poedit-Basepath: .\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+"X-Poedit-SearchPath-0: ..\n"
+
+#: ../includes/register-meta-boxes.php:17
+msgid "Poll options"
+msgstr "Opciones de la encuesta"
+
+#: ../includes/register-meta-boxes.php:24
+msgid "Options"
+msgstr "Opciones"
+
+#: ../includes/register-meta-boxes.php:36
+msgid "Votes"
+msgstr "Votos"
+
+#: ../includes/register-post-type.php:5 ../includes/register-post-type.php:7
+msgid "Polls"
+msgstr "Encuestas"
+
+#: ../includes/register-post-type.php:6 ../includes/register-post-type.php:8
+msgid "Poll"
+msgstr "Encuesta"
+
+#: ../includes/register-post-type.php:9
+msgid "All Items"
+msgstr "Todos los elementos"
+
+#: ../includes/register-post-type.php:10
+msgid "Search Item"
+msgstr ""
+
+#: ../includes/register-post-type.php:13
+msgctxt "post_type_slug"
+msgid "poll"
+msgstr "encuesta"
+
+#~ msgid "poll"
+#~ msgstr "encuesta"

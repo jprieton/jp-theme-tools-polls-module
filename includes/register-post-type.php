@@ -10,7 +10,7 @@ add_action( 'init',
 			'search_items'        => __( 'Search Item', 'jptt' ),
 		);
 		$args = array(
-			'label'               => __( 'poll', 'jptt' ),
+			'label'               => _x( 'poll', 'post_type_slug', 'jptt' ),
 			'labels'              => $labels,
 			'supports'            => array( 'title', 'editor', 'excerpt', 'custom-fields', ),
 			'taxonomies'          => array( ),

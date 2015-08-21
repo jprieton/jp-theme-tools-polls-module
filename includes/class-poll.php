@@ -6,14 +6,6 @@ defined( 'ABSPATH' ) or die( 'No direct script access allowed' );
 
 class Poll {
 
-	public function __construct() {
-
-	}
-
-	private function add_vote( $poll_id, $vote_value ) {
-
-	}
-
 	public static function create_schema() {
 		global $wpdb;
 		$wpdb instanceof \wpdb;
